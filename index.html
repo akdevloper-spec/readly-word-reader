@@ -70,6 +70,7 @@ main{
   justify-content:space-between;
   gap:10px;
   margin:0 0 10px;
+  flex-wrap:wrap;
 }
 .panel h2{
   font-size:13px;
@@ -92,6 +93,7 @@ main{
   align-items:center;
   justify-content:space-between;
   gap:12px;
+  position:relative;
 }
 .upload-info{text-align:left}
 .upload-info strong{display:block;font-size:14px}
@@ -108,14 +110,29 @@ button,.button{
   font-size:13px;
   font-weight:600;
   cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   transition:background .15s,border-color .15s,transform .06s;
 }
 button:hover:not(:disabled),.button:hover{border-color:#5b6fa3;background:#222f52}
-button:active:not(:disabled){transform:translateY(1px)}
+button:active:not(:disabled),.button:active{transform:translateY(1px)}
 button.primary,.button.primary{background:var(--accent);color:#0d1326;border-color:transparent}
 button.primary:hover:not(:disabled),.button.primary:hover{background:#aebcff}
 button:disabled{opacity:.4;cursor:not-allowed}
-input[type=file]{display:none}
+
+/* Visually hidden instead of display:none so mobile browsers always open the file picker */
+.sr-file{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
 
 .controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .field label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}
@@ -254,7 +271,7 @@ body.focus-mode .reader{
       <p>Free offline-friendly Word document reader</p>
     </div>
   </div>
-  <button id="toggleSetup" title="Show or hide upload and voice settings">Hide controls</button>
+  <button id="toggleSetup" type="button" title="Show or hide upload and voice settings">Hide controls</button>
 </header>
 
 <main>
@@ -273,8 +290,8 @@ body.focus-mode .reader{
           <label style="display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer">
             <input id="skipTables" type="checkbox" checked style="width:auto"> Skip tables
           </label>
-          <label class="button primary" for="file">Browse .docx</label>
-          <input id="file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+          <button id="browseBtn" type="button" class="primary">Browse .docx</button>
+          <input id="file" class="sr-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/octet-stream">
         </div>
       </div>
     </section>
@@ -301,59 +318,5 @@ body.focus-mode .reader{
           <div class="field">
             <label for="rate">Reading speed</label>
             <div class="range-row">
-              <input id="rate" type="range" min=".5" max="2" step=".1" value="1">
-              <output id="rateout">1.0×</output>
-            </div>
-          </div>
-          <div class="field">
-            <label for="pitch">Pitch</label>
-            <div class="range-row">
-              <input id="pitch" type="range" min=".6" max="1.6" step=".1" value="1">
-              <output id="pitchout">1.0</output>
-            </div>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-          <button id="refresh">Refresh voices</button>
-          <button id="test">Test voice</button>
-          <button id="voiceSettings">Voice help</button>
-        </div>
-        <div id="voiceStatus" class="status"></div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head"><h2>3. Playback & Jump</h2></div>
-        <div class="player">
-          <button id="play" class="primary" disabled>▶ Play</button>
-          <button id="pause" disabled>Ⅱ Pause</button>
-          <button id="stop" disabled>■ Stop</button>
-          <button id="prev" disabled>‹ Prev</button>
-          <button id="next" disabled>Next ›</button>
-        </div>
-        <div class="progress"><span id="progressbar"></span></div>
-        <div class="meta">
-          <span id="position">Paragraph 0 / 0</span>
-          <span id="percent">0%</span>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px">
-          <label for="startAt" style="font-size:13px;color:var(--muted)">Jump to paragraph</label>
-          <input id="startAt" type="number" min="1" value="1" style="width:86px;background:#0c1324;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:7px 9px">
-          <button id="setStart" disabled>Go</button>
-          <label style="display:flex;gap:6px;align-items:center;margin-left:auto;font-size:12.5px;color:var(--muted);cursor:pointer">
-            <input id="keepAwake" type="checkbox" checked style="width:auto"> Keep screen awake
-          </label>
-        </div>
-        <p id="playStatus" class="status">Select a Word document to begin, or tap any line below to start from that line.</p>
-      </section>
-    </div>
-  </div>
-
-  <section class="panel reader-panel">
-    <div class="reader-toolbar">
-      <div class="mini-controls">
-        <button id="miniPlay" class="primary" disabled>▶ Play</button>
-        <button id="miniPause" disabled>Ⅱ Pause</button>
-        <button id="miniStop" disabled>■ Stop</button>
-        <button id="miniPrev" disabled>‹ Prev</button>
-        <button id="miniNext" disabled>Next ›
-          
+              <input id="rate" type
+                
