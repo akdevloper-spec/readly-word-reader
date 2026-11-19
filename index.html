@@ -93,7 +93,6 @@ main{
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  position:relative;
 }
 .upload-info{text-align:left}
 .upload-info strong{display:block;font-size:14px}
@@ -121,17 +120,20 @@ button.primary,.button.primary{background:var(--accent);color:#0d1326;border-col
 button.primary:hover:not(:disabled),.button.primary:hover{background:#aebcff}
 button:disabled{opacity:.4;cursor:not-allowed}
 
-/* Visually hidden instead of display:none so mobile browsers always open the file picker */
-.sr-file{
-  position:absolute;
-  width:1px;
-  height:1px;
-  padding:0;
-  margin:-1px;
+/* Native file input sits directly over the button so taps always open the picker */
+.file-btn-wrap{
+  position:relative;
   overflow:hidden;
-  clip:rect(0,0,0,0);
-  white-space:nowrap;
-  border:0;
+  cursor:pointer;
+}
+.file-btn-wrap input[type=file]{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  opacity:0;
+  cursor:pointer;
+  font-size:100px;
 }
 
 .controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -268,55 +270,5 @@ body.focus-mode .reader{
     <div class="logo">▶</div>
     <div>
       <h1>Readly</h1>
-      <p>Free offline-friendly Word document reader</p>
-    </div>
-  </div>
-  <button id="toggleSetup" type="button" title="Show or hide upload and voice settings">Hide controls</button>
-</header>
-
-<main>
-  <div id="setupArea" class="setup-grid">
-    <section class="panel">
-      <div class="panel-head">
-        <h2>1. Choose a Word document</h2>
-        <span id="filename" class="status" style="margin:0">No document selected</span>
-      </div>
-      <div class="upload">
-        <div class="upload-info">
-          <strong>Upload a .docx file</strong>
-          <p>Text is extracted locally in your browser and saved offline.</p>
-        </div>
-        <div class="upload-actions">
-          <label style="display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer">
-            <input id="skipTables" type="checkbox" checked style="width:auto"> Skip tables
-          </label>
-          <button id="browseBtn" type="button" class="primary">Browse .docx</button>
-          <input id="file" class="sr-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/octet-stream">
-        </div>
-      </div>
-    </section>
-
-    <div class="setup-two-col">
-      <section class="panel">
-        <div class="panel-head"><h2>2. Select a voice</h2></div>
-        <div class="controls">
-          <div class="field">
-            <label for="accent">Accent group</label>
-            <select id="accent">
-              <option value="en-IN">Indian English</option>
-              <option value="en-US">American English</option>
-              <option value="en-GB">British English</option>
-              <option value="en-AU">Australian English</option>
-              <option value="en-CA">Canadian English</option>
-              <option value="en">All English voices</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="voice">Available device voice</label>
-            <select id="voice"></select>
-          </div>
-          <div class="field">
-            <label for="rate">Reading speed</label>
-            <div class="range-row">
-              <input id="rate" type
-                
+      <p>Free offline
+        
